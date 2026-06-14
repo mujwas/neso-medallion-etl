@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Extract NESO demand data
+        run: uv run python -m src.extract.neso_demand --date 2026-01-01
+
+      - name: Extract carbon intensity data
+        run: uv run python -m src.extract.carbon_intensity --date 2026-01-01
+
+      - name: dbt build (run + test all models)
+        run: uv run dbt build --project-dir dbt_project --profiles-dir dbt_project --target dev
+
+      - name: Run extractor unit tests
+        run: uv run pytest tests/
