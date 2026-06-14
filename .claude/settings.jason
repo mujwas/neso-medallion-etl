@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Write(./data/raw/**)",
+      "Read(./data/warehouse.duckdb)"
+    ]
+  }
+}
