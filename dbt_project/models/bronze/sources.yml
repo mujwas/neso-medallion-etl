@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: neso
+    meta:
+      external_location: "data/raw/neso/demand/*/*/*.parquet"
+    tables:
+      - name: demand
+
+  - name: cic
+    meta:
+      external_location: "data/raw/cic/intensity/*/*/*.parquet"
+    tables:
+      - name: intensity
