@@ -8,6 +8,7 @@ dependencies = [
     "dbt-core>=1.11.11",
     "dbt-duckdb>=1.10.1",
     "duckdb>=1.5.3",
+    "plotly>=6.8.0",
     "polars>=1.41.2",
     "requests>=2.34.2",
     "streamlit>=1.58.0",
