@@ -1,0 +1,160 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: Date dimension spanning 2001-01-01 to the current date, including UK financial year.
+    columns:
+      - name: date_key
+        data_tests:
+          - unique
+          - not_null
+      - name: full_date
+        data_tests:
+          - unique
+          - not_null
+      - name: year
+        data_tests:
+          - not_null
+      - name: month
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1,2,3,4,5,6,7,8,9,10,11,12]
+                quote: false
+      - name: month_name
+        data_tests:
+          - not_null
+      - name: quarter
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1,2,3,4]
+                quote: false
+      - name: day_of_week
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [1,2,3,4,5,6,7]
+                quote: false
+      - name: day_name
+        data_tests:
+          - not_null
+      - name: is_weekend
+        data_tests:
+          - not_null
+      - name: financial_year
+        data_tests:
+          - not_null
+
+  - name: fct_demand_halfhourly
+    description: Half-hourly GB demand and interconnector flows joined to dim_date.
+    columns:
+      - name: date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: settlement_date
+        data_tests:
+          - not_null
+      - name: settlement_period
+        data_tests:
+          - not_null
+      - name: nd
+        data_tests:
+          - not_null
+      - name: tsd
+        data_tests:
+          - not_null
+      - name: england_wales_demand
+        data_tests:
+          - not_null
+      - name: embedded_wind_generation
+        data_tests:
+          - not_null
+      - name: embedded_wind_capacity
+        data_tests:
+          - not_null
+      - name: embedded_solar_generation
+        data_tests:
+          - not_null
+      - name: embedded_solar_capacity
+        data_tests:
+          - not_null
+      - name: non_bm_stor
+        data_tests:
+          - not_null
+      - name: pump_storage_pumping
+        data_tests:
+          - not_null
+      - name: scottish_transfer
+        data_tests:
+          - not_null
+      - name: ifa_flow
+        data_tests:
+          - not_null
+      - name: ifa2_flow
+        data_tests:
+          - not_null
+      - name: britned_flow
+        data_tests:
+          - not_null
+      - name: moyle_flow
+        data_tests:
+          - not_null
+      - name: east_west_flow
+        data_tests:
+          - not_null
+      - name: nemo_flow
+        data_tests:
+          - not_null
+      - name: nsl_flow
+        data_tests:
+          - not_null
+      - name: eleclink_flow
+        data_tests:
+          - not_null
+      - name: viking_flow
+        data_tests:
+          - not_null
+      - name: greenlink_flow
+        data_tests:
+          - not_null
+
+  - name: agg_daily_carbon
+    description: Daily aggregated carbon intensity (avg/min/max forecast & actual, modal index) joined to dim_date.
+    columns:
+      - name: date_key
+        data_tests:
+          - unique
+          - not_null
+      - name: full_date
+        data_tests:
+          - unique
+          - not_null
+      - name: avg_forecast_gco2_per_kwh
+        data_tests:
+          - not_null
+      - name: min_forecast_gco2_per_kwh
+        data_tests:
+          - not_null
+      - name: max_forecast_gco2_per_kwh
+        data_tests:
+          - not_null
+      - name: avg_actual_gco2_per_kwh
+        data_tests:
+          - not_null
+      - name: min_actual_gco2_per_kwh
+        data_tests:
+          - not_null
+      - name: max_actual_gco2_per_kwh
+        data_tests:
+          - not_null
+      - name: carbon_index
+        data_tests:
+          - not_null
